@@ -15,17 +15,30 @@ app.use(index);
 const server = http.createServer(app);
 
 const io = socketIo(server); // < fun
-const getApiAndEmit = "TODO";
+const getApiAndEmit = socket => {
+    const reponse = new Date();
+    // Emitting a new message. Will be consumed by the client
+    socket.emit("FromAPI", response);
+};
 
+// sockets
+let interval;
 
-
-// middleware and methods
-
-
-
-
+io.on("connection", (socket) => {
+    console.Console.log("New clientConnected");
+    if (interval) {
+        clearInterval(interval);
+    }
+    interval = setInterval (() => getApiAndEmit(socket), 1000);
+    socket.on("disconnect", () => {
+        console.log("Client disconnected");
+        clearInterval(interval);
+     });
+})
 
 // routes
 
 // listen and port
+server.listen(port, ()=> console.log(`Listneing on port ${port}`));
+
 
